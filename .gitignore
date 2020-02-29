@@ -3,6 +3,9 @@
 #config folder
 src/config
 
+#test folder
+src/test
+
 # dependencies
 /node_modules
 /.pnp
