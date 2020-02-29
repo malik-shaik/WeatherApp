@@ -23,7 +23,7 @@ export class App extends Component {
     this.setState({ address, coordinates, loading: true });
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 7000);
+    }, 3000);
   };
 
   componentDidMount() {
