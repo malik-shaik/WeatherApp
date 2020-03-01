@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
 import NavBar from "./components/layout/Navbar/Navbar";
 import LandingPage from "./components/main/LandingPage";
 import CurrentWeather from "./components/main/CurrentWeather";
 import TimeMachine from "./components/main/TimeMachine";
+import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
 import "./App.css";
 
 export class App extends Component {
@@ -12,20 +12,9 @@ export class App extends Component {
     appLanguage: "En",
     address: "",
     coordinates: { lat: null, lng: null },
-    loading: false,
+    loading: true,
     currentPage: "/",
     weatherData: {}
-  };
-
-  onLanguageChange = appLanguage => this.setState({ appLanguage });
-  onCurrentPageChange = currentPage => this.setState({ currentPage });
-
-  onAddressChange = async (address, coordinates) => {
-    const { appLanguage } = this.state;
-    this.setState({ loading: true });
-    const weatherData = await fetchWeatherData(coordinates, appLanguage);
-    weatherData &&
-      this.setState({ address, coordinates, weatherData, loading: false });
   };
 
   getLocalWeather = () => {
@@ -34,33 +23,48 @@ export class App extends Component {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
       const coordinates = { lat, lng };
-      this.setState({ coordinates });
-      this.setState({ loading: true });
-      const weatherData = await fetchWeatherData(coordinates, appLanguage);
-      const timezone = await weatherData.timezone;
-      timezone && this.setState({ loading: false });
+      const data = await fetchWeatherData(coordinates, appLanguage);
+      this.setState({ weatherData: data, loading: false });
+      const timezone = data.timezone;
       const address = timezone.split("/")[1];
-      this.setState({ address, weatherData });
+      this.setState({ address });
     });
   };
+
+  // getWeatherData = async (coordinates, appLanguage) => {
+  //   const weatherData = await fetchWeatherData(coordinates, appLanguage);
+  //   this.setState({ weatherData, loading: false });
+  // };
 
   componentDidMount() {
     this.getLocalWeather();
   }
+
+  // componentDidUpdate() {
+  //   const { appLanguage, coordinates } = this.state;
+  //   this.getWeatherData(coordinates, appLanguage);
+  // }
+
+  onLanguageChange = appLanguage => this.setState({ appLanguage });
+  onCurrentPageChange = currentPage => this.setState({ currentPage });
+
+  onAddressChange = async (address, coordinates) => {
+    const { appLanguage } = this.state;
+    // this.getWeatherData(coordinates, appLanguage);
+    const weatherData = await fetchWeatherData(coordinates, appLanguage);
+    this.setState({ address });
+    this.setState({ weatherData, loading: false });
+  };
 
   render() {
     const {
       appLanguage,
       address,
       coordinates,
-      weatherData,
       loading,
+      weatherData,
       currentPage
     } = this.state;
-
-    // const { currently } = weatherData;
-
-    console.log(weatherData.currently);
 
     return (
       <Router>
@@ -81,18 +85,28 @@ export class App extends Component {
               getLocalWeather={this.getLocalWeather}
               onCurrentPageChange={this.onCurrentPageChange}
             />
-            <div>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  component={props => (
-                    <CurrentWeather weatherData={weatherData} {...props} />
-                  )}
-                />
-                <Route exact path="/timemachine" component={TimeMachine} />
-              </Switch>
-            </div>
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <div>
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    component={props => (
+                      <CurrentWeather
+                        appLanguage={appLanguage}
+                        coordinates={coordinates}
+                        weatherData={weatherData}
+                        onAddressChange={this.onAddressChange}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <Route exact path="/timemachine" component={TimeMachine} />
+                </Switch>
+              </div>
+            )}
           </div>
         </Fragment>
       </Router>
