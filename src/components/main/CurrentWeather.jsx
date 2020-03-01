@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ReactAnimatedWeather from "react-animated-weather";
 
 export class CurrentWeather extends Component {
@@ -8,30 +8,84 @@ export class CurrentWeather extends Component {
     loading: this.props.loading
   };
 
+  // getHourlyData = () => {
+  //   const { hourly } = this.state.weatherData;
+  //   const hourlyData = [];
+  //   for (let i = 0; i < 23; i + 2) {
+  //     hourlyData.push(hourly[i]);
+  //   }
+  //   console.log(hourlyData);
+  // };
+
   render() {
-    const defaults = { icon: "CLEAR_DAY", color: "white", size: 75 };
-    const { icon: i, temperature, summary } = this.state.weatherData.currently;
+    const { weatherData } = this.state;
+    const {
+      icon: i,
+      temperature,
+      apparentTemperature,
+      summary
+    } = this.state.weatherData.currently;
     const icon = i.replace(/-/g, "_").toUpperCase();
+    const iconColor = "white";
+    const iconSize = 75;
+    const lowTemp = Math.floor(weatherData.daily.data[0].temperatureLow);
+    const higTemp = Math.floor(weatherData.daily.data[0].temperatureHigh);
+    const daySummary = weatherData.hourly.summary;
+
     return (
-      <div className="content">
-        <div className="weather-icon">
-          <ReactAnimatedWeather
-            icon={icon}
-            // icon="RAIN"
-            color={defaults.color}
-            size={defaults.size}
-          />
+      <Fragment>
+        <div className="content">
+          <div className="weather-icon">
+            <ReactAnimatedWeather
+              icon={icon}
+              color={iconColor}
+              size={iconSize}
+            />
+          </div>
+          <div className="weather-info">
+            <div className="temperature-info">
+              <span className="temperature">
+                {Math.floor(temperature)}&deg;
+              </span>
+              <span className="summary">{summary}</span>
+            </div>
+            <div className="feelslike-info">
+              <span className="feelslike">
+                Feels like:{" "}
+                <strong>{Math.floor(apparentTemperature)}&deg;</strong>
+              </span>{" "}
+              <span>
+                Low: <strong>{lowTemp}&deg;</strong> High:{" "}
+                <strong>{higTemp}&deg;</strong>
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="weather-info">
-          <span className="temperature-info">
-            {Math.floor(temperature)}&deg;
-          </span>
-          {summary}
-          <span>
-            <i>Feels like:</i> -1 Low:2 High:7
-          </span>
+        <div className="daysummary">{daySummary}</div>
+
+        <div className="hourly-data">
+          <div className="hourData">
+            {" "}
+            <div className="hour">1</div> <div id="data">1</div>{" "}
+          </div>
+          <div className="hourData">
+            {" "}
+            <div className="hour">2</div> <div id="data">1</div>{" "}
+          </div>
+          <div className="hourData">
+            {" "}
+            <div className="hour">3</div> <div id="data">1</div>{" "}
+          </div>
+          <div className="hourData">
+            {" "}
+            <div className="hour">4</div> <div id="data">1</div>{" "}
+          </div>
+          <div className="hourData">
+            {" "}
+            <div className="hour">5</div> <div id="data">1</div>{" "}
+          </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

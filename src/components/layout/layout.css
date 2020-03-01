@@ -45,7 +45,8 @@
   padding: 5px;
   outline: none;
   letter-spacing: 0.7px;
-  width: 200px;
+  width: 150px;
+  text-align: center;
 }
 
 .search-text:focus {
@@ -93,7 +94,7 @@
 }
 
 .suggestion-list {
-  width: 200px;
+  width: 150px;
 }
 
 .app-language-div {

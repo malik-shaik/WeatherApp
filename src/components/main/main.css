@@ -47,17 +47,50 @@
 }
 
 .weather-icon {
-  margin: 10px;
+  margin-right: 10px;
 }
 
 .weather-info {
   display: flex;
   flex-direction: column;
-  justify-self: center;
+  align-items: flex-start;
+}
+.temperature-info {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.temperature-info {
-  font-size: x-large;
+.temperature {
+  font-size: xx-large;
   font-weight: 700;
+  margin-right: 15px;
+}
+.summary {
+  font-size: x-large;
+  font-weight: 500;
+}
+.feelslike-info {
+  font-size: x-small;
+}
+.daysummary {
+  display: flex;
+  justify-content: center;
+}
+
+.hourly-data {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  /* width: 100%; */
+  /* background-color: white; */
+  height: 100px;
+  border: solid 1px white;
+  border-radius: 5px;
+}
+
+.hourData {
+  /* color: blue; */
+  color: white;
 }

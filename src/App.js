@@ -23,37 +23,31 @@ export class App extends Component {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
       const coordinates = { lat, lng };
-      const data = await fetchWeatherData(coordinates, appLanguage);
-      this.setState({ weatherData: data, loading: false });
-      const timezone = data.timezone;
+      const weatherData = await fetchWeatherData(coordinates, appLanguage);
+      this.setState({ coordinates, weatherData, loading: false });
+      const timezone = weatherData.timezone;
       const address = timezone.split("/")[1];
       this.setState({ address });
     });
   };
 
-  // getWeatherData = async (coordinates, appLanguage) => {
-  //   const weatherData = await fetchWeatherData(coordinates, appLanguage);
-  //   this.setState({ weatherData, loading: false });
-  // };
-
   componentDidMount() {
     this.getLocalWeather();
   }
 
-  // componentDidUpdate() {
-  //   const { appLanguage, coordinates } = this.state;
-  //   this.getWeatherData(coordinates, appLanguage);
-  // }
-
-  onLanguageChange = appLanguage => this.setState({ appLanguage });
   onCurrentPageChange = currentPage => this.setState({ currentPage });
+
+  onLanguageChange = async appLanguage => {
+    const { coordinates } = this.state;
+    this.setState({ loading: true });
+    const weatherData = await fetchWeatherData(coordinates, appLanguage);
+    this.setState({ appLanguage, weatherData, loading: false });
+  };
 
   onAddressChange = async (address, coordinates) => {
     const { appLanguage } = this.state;
-    // this.getWeatherData(coordinates, appLanguage);
     const weatherData = await fetchWeatherData(coordinates, appLanguage);
-    this.setState({ address });
-    this.setState({ weatherData, loading: false });
+    this.setState({ address, coordinates, weatherData, loading: false });
   };
 
   render() {
@@ -65,7 +59,7 @@ export class App extends Component {
       weatherData,
       currentPage
     } = this.state;
-
+    !loading && console.log(weatherData);
     return (
       <Router>
         <Fragment>
@@ -86,7 +80,7 @@ export class App extends Component {
               onCurrentPageChange={this.onCurrentPageChange}
             />
             {loading ? (
-              <div>Loading...</div>
+              <div className="content">Loading...</div>
             ) : (
               <div>
                 <Switch>
