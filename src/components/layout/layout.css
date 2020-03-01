@@ -1,10 +1,11 @@
 .navbar {
   height: 12vh;
   width: 100%;
-  background-color: #f8f4e3;
-  color: #706c61;
+  background-color: white;
+  color: #2f96a3;
   display: flex;
   align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .logo-container {
@@ -12,7 +13,7 @@
   margin-left: 13%;
   font-family: "Poppins";
   font-weight: bold;
-  color: #f8f4e3;
+  color: white;
 }
 
 .logo {
@@ -27,7 +28,6 @@
 
 .search-box {
   position: relative;
-  /* display: inline-block; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,8 +38,8 @@
 .search-text {
   background: none;
   margin-right: 5px;
-  border: 1px solid #706c61;
-  color: #706c61;
+  border: 1px solid #2f96a3;
+  color: #2f96a3;
   border-radius: 5px;
   height: 15px;
   padding: 5px;
@@ -48,9 +48,14 @@
   width: 200px;
 }
 
-#search-icon:hover {
+.search-text:focus {
+  border: 1px solid #30b8ca;
+}
+
+#search-icon:hover,
+.app-language-text:hover {
   cursor: pointer;
-  color: #4e4b41;
+  color: #30b8ca;
 }
 
 .loading-icon {
@@ -69,7 +74,8 @@
   }
 }
 
-.suggestion-list {
+.suggestion-list,
+.language-list {
   position: absolute;
   border-bottom: none;
   border-top: none;
@@ -77,21 +83,33 @@
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #f8f4e3;
+  background-color: white;
   font-size: 12px;
   padding: 5px;
-  width: 200px;
   border-radius: 0px 0px 5px 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  list-style: none;
+  text-align: center;
+}
+
+.suggestion-list {
+  width: 200px;
 }
 
 .app-language-div {
-  border: 1px solid #706c61;
+  border: 1px solid #2f96a3;
   border-radius: 5px;
   height: 15px;
   padding: 5px;
   font-size: 12px;
   cursor: pointer;
   width: 20px;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
 .app-language-text {
@@ -104,14 +122,10 @@
   margin-top: 7px;
 }
 
-.language-list li {
-  list-style: none;
-}
-
 .language {
-  background: #f8f4e3;
-  padding: 5px;
-  width: 17px;
+  padding: 2px;
+  transition-property: color;
+  transition-delay: 2s;
 }
 
 .city {
@@ -121,6 +135,6 @@
 .language:hover,
 .city:hover {
   cursor: pointer;
-  color: #4e4b41;
+  color: #2f96a3;
   font-weight: 700;
 }

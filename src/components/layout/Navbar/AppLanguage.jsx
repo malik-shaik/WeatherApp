@@ -7,7 +7,7 @@ export class AppLanguage extends Component {
   };
 
   render() {
-    const { onChangeLanguage, appLanguage } = this.props;
+    const { onLanguageChange, appLanguage } = this.props;
     const { languageCodes, displaylist } = this.state;
 
     return (
@@ -22,7 +22,7 @@ export class AppLanguage extends Component {
               <li
                 key={languageCode}
                 className="language"
-                onClick={() => onChangeLanguage(languageCode)}
+                onClick={() => onLanguageChange(languageCode)}
               >
                 {languageCode.toUpperCase()}
               </li>

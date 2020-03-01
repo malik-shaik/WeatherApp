@@ -13,30 +13,40 @@ export class App extends Component {
     address: "",
     coordinates: { lat: null, lng: null },
     loading: false,
-    currentPage: "/"
+    currentPage: "/",
+    weatherData: {}
   };
 
-  onChangeLanguage = appLanguage => this.setState({ appLanguage });
+  onLanguageChange = appLanguage => this.setState({ appLanguage });
   onCurrentPageChange = currentPage => this.setState({ currentPage });
 
-  onAddressChange = (address, coordinates) => {
-    this.setState({ address, coordinates, loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 3000);
+  onAddressChange = async (address, coordinates) => {
+    const { appLanguage } = this.state;
+    this.setState({ loading: true });
+    const weatherData = await fetchWeatherData(coordinates, appLanguage);
+    weatherData &&
+      this.setState({ address, coordinates, weatherData, loading: false });
   };
 
-  componentDidMount() {
-    const city = "";
-    navigator.geolocation.getCurrentPosition((position, city) => {
+  getLocalWeather = () => {
+    const { appLanguage } = this.state;
+    navigator.geolocation.getCurrentPosition(async position => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
       const coordinates = { lat, lng };
       this.setState({ coordinates });
-      console.log(coordinates);
-      city = fetchWeatherData(coordinates);
+      this.setState({ loading: true });
+      const weatherData = await fetchWeatherData(coordinates, appLanguage);
+      const timezone = await weatherData.timezone;
+      timezone && this.setState({ loading: false });
+      const address = timezone.split("/")[1];
+      this.setState({ address });
+      this.setState({ weatherData });
     });
-    this.setState({ address: city });
+  };
+
+  componentDidMount() {
+    this.getLocalWeather();
   }
 
   render() {
@@ -44,9 +54,15 @@ export class App extends Component {
       appLanguage,
       address,
       coordinates,
+      weatherData,
       loading,
       currentPage
     } = this.state;
+
+    const { currently } = weatherData;
+
+    console.log(currently);
+
     return (
       <Router>
         <Fragment>
@@ -55,7 +71,7 @@ export class App extends Component {
             address={address}
             coordinates={coordinates}
             loading={loading}
-            onChangeLanguage={this.onChangeLanguage}
+            onLanguageChange={this.onLanguageChange}
             onAddressChange={this.onAddressChange}
           />
           <div className="main-content">
@@ -63,11 +79,18 @@ export class App extends Component {
               appLanguage={appLanguage}
               address={address}
               currentPage={currentPage}
+              getLocalWeather={this.getLocalWeather}
               onCurrentPageChange={this.onCurrentPageChange}
             />
             <div>
               <Switch>
-                <Route exact path="/" component={CurrentWeather} />
+                <Route
+                  exact
+                  path="/"
+                  component={props => (
+                    <CurrentWeather weatherData={weatherData} {...props} />
+                  )}
+                />
                 <Route exact path="/timemachine" component={TimeMachine} />
               </Switch>
             </div>

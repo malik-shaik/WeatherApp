@@ -9,7 +9,7 @@ export class NavBar extends Component {
     const {
       appLanguage,
       onAddressChange,
-      onChangeLanguage,
+      onLanguageChange,
       loading
     } = this.props;
     return (
@@ -19,7 +19,7 @@ export class NavBar extends Component {
           <Search onAddressChange={onAddressChange} loading={loading} />
           <AppLanguage
             appLanguage={appLanguage}
-            onChangeLanguage={onChangeLanguage}
+            onLanguageChange={onLanguageChange}
           />
         </div>
       </header>

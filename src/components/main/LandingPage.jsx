@@ -5,11 +5,16 @@ import "./main.css";
 
 export class LandingPage extends Component {
   render() {
-    const { currentPage, onCurrentPageChange } = this.props;
-
+    const {
+      address,
+      currentPage,
+      onCurrentPageChange,
+      getLocalWeather
+    } = this.props;
     return (
       <div className="landing-page-items">
-        <MdGpsFixed className="gps-icon" />
+        <MdGpsFixed className="gps-icon" onClick={getLocalWeather} />
+        <div className="place">{address}</div>
         {currentPage === "/" ? (
           <Link
             onClick={() => onCurrentPageChange("/timemachine")}

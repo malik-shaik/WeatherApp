@@ -7,8 +7,7 @@ export class Search extends Component {
     address: "",
     coordinates: { lat: null, lng: null },
     displaylist: false,
-    suggestions: [],
-    loading: false
+    suggestions: []
   };
 
   handleInputChange = evt => {
