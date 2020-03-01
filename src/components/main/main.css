@@ -42,5 +42,22 @@
 .content {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 10px;
+}
+
+.weather-icon {
+  margin: 10px;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+}
+
+.temperature-info {
+  font-size: x-large;
+  font-weight: 700;
 }

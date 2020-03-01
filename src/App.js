@@ -40,8 +40,7 @@ export class App extends Component {
       const timezone = await weatherData.timezone;
       timezone && this.setState({ loading: false });
       const address = timezone.split("/")[1];
-      this.setState({ address });
-      this.setState({ weatherData });
+      this.setState({ address, weatherData });
     });
   };
 
@@ -59,9 +58,9 @@ export class App extends Component {
       currentPage
     } = this.state;
 
-    const { currently } = weatherData;
+    // const { currently } = weatherData;
 
-    console.log(currently);
+    console.log(weatherData.currently);
 
     return (
       <Router>
