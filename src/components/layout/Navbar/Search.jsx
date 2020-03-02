@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { FaSearch, FaSpinner } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import cityTimezones from "city-timezones";
+import { MoonLoader } from "react-spinners";
 
 export class Search extends Component {
   state = {
@@ -30,8 +31,9 @@ export class Search extends Component {
     this.setState({ address, coordinates, displaylist: !displaylist });
   };
 
-  handleSearch = (onAddressChange, address, coordinates) =>
-    onAddressChange(address, coordinates);
+  handleSearch = (onAddressChange, address, coordinates) => {
+    if (address.length !== 0) onAddressChange(address, coordinates);
+  };
 
   render() {
     const { onAddressChange, loading } = this.props;
@@ -47,7 +49,7 @@ export class Search extends Component {
           disabled={loading}
         />
         {loading ? (
-          <FaSpinner className="fa-spin loading-icon" />
+          <MoonLoader size={18} color={"#2f96a3"} loading={loading} />
         ) : (
           <FaSearch
             id="search-icon"

@@ -7,3 +7,7 @@
   color: white;
   border-radius: 10px;
 }
+
+#loading-spinner {
+  margin-top: 50px;
+}

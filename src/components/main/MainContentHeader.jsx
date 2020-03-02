@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MdGpsFixed } from "react-icons/md";
 import "./main.css";
 
-export class LandingPage extends Component {
+export class MainContentHeader extends Component {
   render() {
     const {
       address,
@@ -37,4 +37,4 @@ export class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+export default MainContentHeader;

@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
+import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
 import NavBar from "./components/layout/Navbar/Navbar";
-import LandingPage from "./components/main/LandingPage";
 import CurrentWeather from "./components/main/CurrentWeather";
 import TimeMachine from "./components/main/TimeMachine";
-import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
+import MainContentHeader from "./components/main/MainContentHeader";
+
 import "./App.css";
 
 export class App extends Component {
@@ -59,7 +61,7 @@ export class App extends Component {
       weatherData,
       currentPage
     } = this.state;
-    !loading && console.log(weatherData);
+
     return (
       <Router>
         <Fragment>
@@ -72,34 +74,35 @@ export class App extends Component {
             onAddressChange={this.onAddressChange}
           />
           <div className="main-content">
-            <LandingPage
+            <MainContentHeader
               appLanguage={appLanguage}
               address={address}
               currentPage={currentPage}
               getLocalWeather={this.getLocalWeather}
               onCurrentPageChange={this.onCurrentPageChange}
             />
+
             {loading ? (
-              <div className="content">Loading...</div>
-            ) : (
-              <div>
-                <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    component={props => (
-                      <CurrentWeather
-                        appLanguage={appLanguage}
-                        coordinates={coordinates}
-                        weatherData={weatherData}
-                        onAddressChange={this.onAddressChange}
-                        {...props}
-                      />
-                    )}
-                  />
-                  <Route exact path="/timemachine" component={TimeMachine} />
-                </Switch>
+              <div id="loading-spinner" className="content">
+                <MoonLoader size={50} color={"#fff"} loading={loading} />
               </div>
+            ) : (
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={props => (
+                    <CurrentWeather
+                      appLanguage={appLanguage}
+                      coordinates={coordinates}
+                      weatherData={weatherData}
+                      onAddressChange={this.onAddressChange}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route exact path="/timemachine" component={TimeMachine} />
+              </Switch>
             )}
           </div>
         </Fragment>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export class AppLanguage extends Component {
   state = {
-    languageCodes: ["ar", "az", "be", "bg", "bn", "bs", "ca", "cs", "da", "de"],
+    languageCodes: ["ar", "bn", "da", "de", "en", "es", "hi", "ru", "zh"],
     displaylist: false
   };
 
