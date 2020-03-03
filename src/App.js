@@ -2,12 +2,13 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
-import NavBar from "./components/layout/Navbar/Navbar";
+import NavBar from "./components/layout/Navbar";
 import CurrentWeather from "./components/main/CurrentWeather";
 import TimeMachine from "./components/main/TimeMachine";
 import MainContentHeader from "./components/main/MainContentHeader";
 
 import "./App.css";
+import Footer from "./components/layout/Footer";
 
 export class App extends Component {
   state = {
@@ -105,6 +106,7 @@ export class App extends Component {
               </Switch>
             )}
           </div>
+          <Footer />
         </Fragment>
       </Router>
     );

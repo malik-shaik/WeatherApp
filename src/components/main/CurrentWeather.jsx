@@ -3,10 +3,8 @@ import ReactAnimatedWeather from "react-animated-weather";
 
 export class CurrentWeather extends Component {
   state = {
-    address: this.props.address,
     weatherData: this.props.weatherData,
-    hourlyData: [],
-    loading: this.props.loading
+    hourlyData: []
   };
 
   componentDidMount() {
@@ -14,30 +12,32 @@ export class CurrentWeather extends Component {
     const { hourlyData } = this.state;
     for (let i = 0; i < 23; i++) {
       i % 2 !== 0 && hourlyData.push(data[i]);
-      // if (i % 2 !== 0) {
-      //   let unix_timestamp = data[i].time;
-      //   let date = new Date(unix_timestamp * 1000);
-      //   var hours = date.getHours();
-      //   console.log(hours);
-      //   hourlyData.push(data[i]);
-      // }
-      this.setState({ hourlyData });
     }
+    this.setState({ hourlyData });
   }
 
+  // convert unix time
+  getTime = unixTime => {
+    let date = new Date(unixTime * 1000);
+    let hours = date.getHours();
+    let time = hours > 12 ? `${hours - 12}pm` : `${hours}am`;
+    return time;
+  };
+
+  getIcon = icon => icon.replace(/-/g, "_").toUpperCase();
+
   render() {
-    const { weatherData } = this.state;
+    const { weatherData, hourlyData } = this.state;
     const {
-      icon: i,
+      icon,
       temperature,
       apparentTemperature,
       summary
     } = this.state.weatherData.currently;
-    const icon = i.replace(/-/g, "_").toUpperCase();
-    const iconColor = "white";
-    const iconSize = 75;
+    const mainTemperature = Math.floor(temperature);
     const lowTemp = Math.floor(weatherData.daily.data[0].temperatureLow);
     const higTemp = Math.floor(weatherData.daily.data[0].temperatureHigh);
+    const apparentTemp = Math.floor(apparentTemperature);
     const daySummary = weatherData.hourly.summary;
 
     return (
@@ -45,22 +45,19 @@ export class CurrentWeather extends Component {
         <div className="content">
           <div className="weather-icon">
             <ReactAnimatedWeather
-              icon={icon}
-              color={iconColor}
-              size={iconSize}
+              icon={this.getIcon(icon)}
+              color={"white"}
+              size={75}
             />
           </div>
           <div className="weather-info">
             <div className="temperature-info">
-              <span className="temperature">
-                {Math.floor(temperature)}&deg;
-              </span>
+              <span className="temperature">{mainTemperature}&deg;</span>
               <span className="summary">{summary}</span>
             </div>
             <div className="feelslike-info">
               <span className="feelslike">
-                Feels like:{" "}
-                <strong>{Math.floor(apparentTemperature)}&deg;</strong>
+                Feels like: <strong>{apparentTemp}&deg;</strong>
               </span>{" "}
               <span>
                 Low: <strong>{lowTemp}&deg;</strong> High:{" "}
@@ -70,28 +67,23 @@ export class CurrentWeather extends Component {
           </div>
         </div>
         <div className="daysummary">{daySummary}</div>
-
         <div className="hourly-data">
-          <div className="hourData">
-            {" "}
-            <div className="hour">1</div> <div id="data">1</div>{" "}
-          </div>
-          <div className="hourData">
-            {" "}
-            <div className="hour">2</div> <div id="data">1</div>{" "}
-          </div>
-          <div className="hourData">
-            {" "}
-            <div className="hour">3</div> <div id="data">1</div>{" "}
-          </div>
-          <div className="hourData">
-            {" "}
-            <div className="hour">4</div> <div id="data">1</div>{" "}
-          </div>
-          <div className="hourData">
-            {" "}
-            <div className="hour">5</div> <div id="data">1</div>{" "}
-          </div>
+          {hourlyData.map(data => (
+            <div key={data.time} className="hourData">
+              <div className="hour">{this.getTime(data.time)}</div>
+              <div id="hourly-icon">
+                <ReactAnimatedWeather
+                  icon={this.getIcon(data.icon)}
+                  color={"white"}
+                  size={25}
+                />
+              </div>
+              <div className="hour-summary">{data.summary}</div>
+              <div id="hourly-timperature">
+                {Math.floor(data.temperature)}&deg;
+              </div>
+            </div>
+          ))}
         </div>
       </Fragment>
     );

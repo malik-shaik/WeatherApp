@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Logo from "./Logo";
-import Search from "./Search";
-import AppLanguage from "./AppLanguage";
-import "../layout.css";
+import Logo from "./Navbar/Logo";
+import Search from "./Navbar/Search";
+import AppLanguage from "./Navbar/AppLanguage";
+import "./layout.css";
 
 export class NavBar extends Component {
   render() {
