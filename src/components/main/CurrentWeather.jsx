@@ -5,17 +5,25 @@ export class CurrentWeather extends Component {
   state = {
     address: this.props.address,
     weatherData: this.props.weatherData,
+    hourlyData: [],
     loading: this.props.loading
   };
 
-  // getHourlyData = () => {
-  //   const { hourly } = this.state.weatherData;
-  //   const hourlyData = [];
-  //   for (let i = 0; i < 23; i + 2) {
-  //     hourlyData.push(hourly[i]);
-  //   }
-  //   console.log(hourlyData);
-  // };
+  componentDidMount() {
+    const { data } = this.state.weatherData.hourly;
+    const { hourlyData } = this.state;
+    for (let i = 0; i < 23; i++) {
+      i % 2 !== 0 && hourlyData.push(data[i]);
+      // if (i % 2 !== 0) {
+      //   let unix_timestamp = data[i].time;
+      //   let date = new Date(unix_timestamp * 1000);
+      //   var hours = date.getHours();
+      //   console.log(hours);
+      //   hourlyData.push(data[i]);
+      // }
+      this.setState({ hourlyData });
+    }
+  }
 
   render() {
     const { weatherData } = this.state;
