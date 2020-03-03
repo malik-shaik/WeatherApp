@@ -22,6 +22,7 @@ export class App extends Component {
 
   getLocalWeather = () => {
     const { appLanguage } = this.state;
+    this.setState({ loading: true });
     navigator.geolocation.getCurrentPosition(async position => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;

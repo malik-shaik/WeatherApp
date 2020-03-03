@@ -32,7 +32,10 @@ export class Search extends Component {
   };
 
   handleSearch = (onAddressChange, address, coordinates) => {
-    if (address.length !== 0) onAddressChange(address, coordinates);
+    if (address.length !== 0) {
+      onAddressChange(address, coordinates);
+      this.setState({ address: "" });
+    }
   };
 
   render() {

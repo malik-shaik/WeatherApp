@@ -10,7 +10,7 @@ export class CurrentWeather extends Component {
   componentDidMount() {
     const { data } = this.state.weatherData.hourly;
     const { hourlyData } = this.state;
-    for (let i = 0; i < 23; i++) {
+    for (let i = 0; i < 24; i++) {
       i % 2 !== 0 && hourlyData.push(data[i]);
     }
     this.setState({ hourlyData });
@@ -20,7 +20,7 @@ export class CurrentWeather extends Component {
   getTime = unixTime => {
     let date = new Date(unixTime * 1000);
     let hours = date.getHours();
-    let time = hours > 12 ? `${hours - 12}pm` : `${hours}am`;
+    let time = hours >= 12 ? `${hours - 12}pm` : `${hours}am`;
     return time;
   };
 

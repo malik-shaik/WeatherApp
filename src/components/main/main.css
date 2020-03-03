@@ -6,6 +6,7 @@
   height: 30px;
   padding: 10px;
   margin: auto;
+  margin-top: 40px;
 }
 
 .gps-icon :hover,
@@ -75,14 +76,16 @@
   font-size: 11px;
 }
 .daysummary {
-  display: flex;
-  justify-content: center;
+  margin-top: 10px;
+  text-align: center;
+  /* display: flex;
+  justify-content: center; */
 }
 
 .hourly-data {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 40px;
   padding: 10px;
   width: 100%;
   border: solid 1px white;
@@ -92,14 +95,20 @@
 }
 
 .hourData {
-  /* margin: 10px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* padding: 5px; */
 }
 
 .hour {
   font-size: 12px;
+  margin-bottom: 5px;
 }
 
 #hourly-timperature {
+  margin-top: 5px;
   font-weight: 700;
   /* text-align: center; */
 }
