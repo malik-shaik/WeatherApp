@@ -115,3 +115,47 @@
 .hour-summary {
   font-size: 9px;
 }
+
+.days-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.selectedday {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectedday span {
+  margin-right: 10px;
+}
+
+.calender {
+  position: absolute;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.react-datepicker__header {
+  /* background-color: #2f96a3; */
+}
+
+.nextday,
+.previousday {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nextday:hover,
+.previousday:hover {
+  cursor: pointer;
+}

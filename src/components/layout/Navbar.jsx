@@ -10,8 +10,11 @@ export class NavBar extends Component {
       appLanguage,
       onAddressChange,
       onLanguageChange,
-      loading
+      onUnitsChange,
+      loading,
+      units
     } = this.props;
+
     return (
       <header className="navbar">
         <Logo />
@@ -21,6 +24,21 @@ export class NavBar extends Component {
             appLanguage={appLanguage}
             onLanguageChange={onLanguageChange}
           />
+          <div className="units">
+            <span
+              onClick={() => onUnitsChange("celsius")}
+              className={units === "celsius" ? "active" : ""}
+            >
+              C&deg;
+            </span>
+            /
+            <span
+              onClick={() => onUnitsChange("fahrenheit")}
+              className={units === "fahrenheit" ? "active" : ""}
+            >
+              F&deg;
+            </span>
+          </div>
         </div>
       </header>
     );

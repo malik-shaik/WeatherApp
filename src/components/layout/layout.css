@@ -84,6 +84,7 @@
   width: 150px;
 }
 
+.units,
 .app-language-div {
   border: 1px solid #2f96a3;
   border-radius: 5px;
@@ -92,12 +93,26 @@
   font-size: 12px;
   cursor: pointer;
   width: 20px;
-
   position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+}
+
+.app-language-div {
+  margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  list-style: none;
+}
+
+.units {
+  width: 40px;
+}
+
+.active {
+  font-weight: 600;
 }
 
 .app-language-text {
