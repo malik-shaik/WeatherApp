@@ -143,9 +143,9 @@
   text-align: center;
 }
 
-.hour-summary {
-  /* margin: 0px 2px; */
-}
+/* .hour-summary {
+  margin: 0px 2px;
+} */
 
 .days-wrapper {
   display: flex;
@@ -199,9 +199,6 @@
 }
 .dayinfo {
   margin-top: 20px;
-}
-
-.temperature-range {
 }
 
 .temp-range {
