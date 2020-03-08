@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
-import { fetchWeatherData } from "./components/main/apiCalls/fetchWeatherData";
+import { fetchWeatherData } from "./apiCalls/fetchWeatherData";
+import { fetchTimeMachineData } from "./apiCalls/fetchTimeMachineData";
 import NavBar from "./components/layout/Navbar";
 import CurrentWeather from "./components/main/CurrentWeather";
 import TimeMachine from "./components/main/TimeMachine";
-import MainContentHeader from "./components/main/MainContentHeader";
 import Footer from "./components/layout/Footer";
 import "./App.css";
 
@@ -17,12 +17,12 @@ export class App extends Component {
     date: new Date(),
     coordinates: { lat: null, lng: null },
     loading: true,
-    currentPage: "/",
-    weatherData: {}
+    weatherData: {},
+    timeMachineData: {}
   };
 
   getLocalWeather = () => {
-    const { appLanguage, units } = this.state;
+    const { appLanguage, units, date } = this.state;
     this.setState({ loading: true });
     navigator.geolocation.getCurrentPosition(async position => {
       const lat = position.coords.latitude;
@@ -33,7 +33,18 @@ export class App extends Component {
         appLanguage,
         units
       );
-      this.setState({ coordinates, weatherData, loading: false });
+      const timeMachineData = await fetchTimeMachineData(
+        coordinates,
+        appLanguage,
+        units,
+        date
+      );
+      this.setState({
+        coordinates,
+        weatherData,
+        timeMachineData,
+        loading: false
+      });
       const timezone = weatherData.timezone;
       const address = timezone.split("/")[1];
       this.setState({ address });
@@ -44,35 +55,47 @@ export class App extends Component {
     this.getLocalWeather();
   }
 
+  getTimeMachineData = async (coordinates, appLanguage, units, date) => {
+    this.setState({ loading: true });
+    const timeMachineData = await fetchTimeMachineData(
+      coordinates,
+      appLanguage,
+      units,
+      date
+    );
+    this.setState({ appLanguage, timeMachineData, loading: false });
+  };
+
   getTodaysWeatherData = async (coordinates, appLanguage, units) => {
     this.setState({ loading: true });
     const weatherData = await fetchWeatherData(coordinates, appLanguage, units);
     this.setState({ appLanguage, weatherData, loading: false });
   };
 
-  onCurrentPageChange = currentPage => this.setState({ currentPage });
-
   onLanguageChange = async appLanguage => {
-    const { coordinates, units } = this.state;
+    const { coordinates, units, date } = this.state;
     this.getTodaysWeatherData(coordinates, appLanguage, units);
+    this.getTimeMachineData(coordinates, appLanguage, units, date);
   };
 
   onUnitsChange = async units => {
-    const { coordinates, appLanguage } = this.state;
+    const { coordinates, appLanguage, date } = this.state;
     this.setState({ units });
     this.getTodaysWeatherData(coordinates, appLanguage, units);
+    this.getTimeMachineData(coordinates, appLanguage, units, date);
   };
 
   onAddressChange = async (address, coordinates) => {
-    const { appLanguage, units } = this.state;
+    const { appLanguage, units, date } = this.state;
     this.setState({ address });
     this.getTodaysWeatherData(coordinates, appLanguage, units);
+    this.getTimeMachineData(coordinates, appLanguage, units, date);
   };
 
   onDateChange = date => {
-    // const unixTimeStamp = Math.round(date.getTime() / 1000);
+    const { coordinates, appLanguage, units } = this.state;
     this.setState({ date });
-    console.log(date);
+    this.getTimeMachineData(coordinates, appLanguage, units, date);
   };
 
   render() {
@@ -82,7 +105,7 @@ export class App extends Component {
       coordinates,
       loading,
       weatherData,
-      currentPage,
+      timeMachineData,
       date,
       units
     } = this.state;
@@ -101,14 +124,6 @@ export class App extends Component {
             onUnitsChange={this.onUnitsChange}
           />
           <div className="main-content">
-            <MainContentHeader
-              appLanguage={appLanguage}
-              address={address}
-              currentPage={currentPage}
-              getLocalWeather={this.getLocalWeather}
-              onCurrentPageChange={this.onCurrentPageChange}
-            />
-
             {loading ? (
               <div id="loading-spinner" className="content">
                 <MoonLoader size={50} color={"#fff"} loading={loading} />
@@ -120,9 +135,10 @@ export class App extends Component {
                   path="/"
                   component={props => (
                     <CurrentWeather
-                      appLanguage={appLanguage}
+                      address={address}
                       coordinates={coordinates}
                       weatherData={weatherData}
+                      getLocalWeather={this.getLocalWeather}
                       onAddressChange={this.onAddressChange}
                       {...props}
                     />
@@ -134,6 +150,9 @@ export class App extends Component {
                   component={props => (
                     <TimeMachine
                       date={date}
+                      units={units}
+                      address={address}
+                      timeMachineData={timeMachineData}
                       onDateChange={this.onDateChange}
                       {...props}
                     />

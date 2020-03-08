@@ -6,7 +6,7 @@
   height: 30px;
   padding: 10px;
   margin: auto;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .gps-icon :hover,
@@ -76,30 +76,55 @@
   font-size: 11px;
 }
 .daysummary {
-  margin-top: 10px;
+  margin-top: 25px;
   text-align: center;
-  /* display: flex;
-  justify-content: center; */
+  font-size: 20px;
 }
 
-.hourly-data {
+.hourly-data,
+.weekly-data {
   display: flex;
   justify-content: space-around;
-  margin-top: 40px;
+  margin-top: 35px;
   padding: 10px;
-  width: 100%;
+  /* width: 100%; */
   border: solid 1px white;
   border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
 }
 
+.weekData {
+  color: white;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: 600;
+}
+.weekly-icon,
+#hourly-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-summary {
+  /* font-size: small; */
+  font-size: 9px;
+}
+
 .hourData {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  /* justify-content: center; */
   align-items: center;
-  /* padding: 5px; */
 }
 
 .hour {
@@ -110,10 +135,16 @@
 #hourly-timperature {
   margin-top: 5px;
   font-weight: 700;
-  /* text-align: center; */
 }
+
+.day-summary,
 .hour-summary {
   font-size: 9px;
+  text-align: center;
+}
+
+.hour-summary {
+  /* margin: 0px 2px; */
 }
 
 .days-wrapper {
@@ -121,6 +152,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 20px;
 }
 
 .selectedday {
@@ -144,12 +176,10 @@
   right: 0;
 }
 
-.react-datepicker__header {
-  /* background-color: #2f96a3; */
-}
-
 .nextday,
 .previousday {
+  font-size: small;
+  font-style: italic;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,4 +188,52 @@
 .nextday:hover,
 .previousday:hover {
   cursor: pointer;
+}
+
+.dayinfo,
+.sun-rise-set,
+.temperature-range {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.dayinfo {
+  margin-top: 20px;
+}
+
+.temperature-range {
+}
+
+.temp-range {
+  font-weight: 700;
+  font-size: large;
+}
+
+.temp-time {
+  font-size: small;
+  margin: 0px 5px;
+}
+
+.uv-lable,
+.visibility-lable,
+.wind-lable {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.uv-value,
+.visibiltiy-value,
+.wind-value {
+  font-size: small;
+  margin: 0px 5px;
+}
+
+.uv-value,
+.visibiltiy-value {
+  margin-right: 15px;
+}
+
+.dayinfo-units {
+  font-size: smaller;
+  /* font-style: italic; */
+  margin: 0px 3px;
 }

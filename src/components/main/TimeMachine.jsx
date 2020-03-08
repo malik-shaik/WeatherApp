@@ -1,92 +1,69 @@
-import React, { Component } from "react";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import {
-  IoMdClose,
-  IoIosArrowRoundBack,
-  IoIosArrowRoundForward
-} from "react-icons/io";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+import React, { Component, Fragment } from "react";
+import DatesSection from "./TimeMachine/DatesSection";
+import DaySummary from "./CommonComponents/DaySummary";
+import HourlyData from "./TimeMachine/HourlyData";
+import DayInfo from "./TimeMachine/DayInfo";
+import MainContentHeader from "./MainContentHeader";
 
 export class TimeMachine extends Component {
   state = {
-    currentDay: "",
-    nextDay: "",
-    previousDay: "",
-    displayCalander: false
+    timeMachineData: this.props.timeMachineData,
+    hourlyData: []
   };
 
   componentDidMount() {
-    const { date } = this.props;
-    this.setDates(date);
+    const { data } = this.state.timeMachineData.hourly;
+    const { hourlyData } = this.state;
+    for (let i = 0; i < 24; i++) {
+      i % 2 !== 0 && hourlyData.push(data[i]);
+    }
+    this.setState({ hourlyData });
   }
-
-  setDates = date => {
-    const nextDate = this.nextDate(date);
-    const nextDay = moment(nextDate)
-      .format("dddd Do MMMM")
-      .toString();
-    const previousDate = this.previousDate(date);
-    const previousDay = moment(previousDate)
-      .format("dddd Do MMMM")
-      .toString();
-    this.setState({ nextDay, previousDay });
-  };
-
-  nextDate = date => moment(date).add(1, "days")._d;
-  previousDate = date => moment(date).subtract(1, "days")._d;
-
   render() {
-    const { nextDay, previousDay, displayCalander } = this.state;
-    const { date, onDateChange } = this.props;
+    const { date, onDateChange, address, getLocalWeather, units } = this.props;
+
+    const { hourlyData } = this.state;
+    const {
+      summary: daySummary,
+      windSpeed,
+      uvIndex,
+      visibility,
+      sunriseTime,
+      sunsetTime,
+      temperatureHigh,
+      temperatureHighTime,
+      temperatureLow,
+      temperatureLowTime
+    } = this.state.timeMachineData.daily.data[0];
+    console.log();
     return (
-      <div className="content">
-        <div className="days-wrapper">
-          <div
-            onClick={() => onDateChange(this.previousDate(date))}
-            className="previousday"
-          >
-            <IoIosArrowRoundBack size={30} /> {previousDay}{" "}
-          </div>
-          <div className="selectedday">
-            <span>{date.toDateString()} </span>
-            {displayCalander ? (
-              <IoMdClose
-                onClick={() =>
-                  this.setState({ displayCalander: !displayCalander })
-                }
-              />
-            ) : (
-              <FaRegCalendarAlt
-                onClick={() =>
-                  this.setState({ displayCalander: !displayCalander })
-                }
-              />
-            )}
-            {displayCalander && (
-              <div className="calender">
-                <DatePicker
-                  selected={date}
-                  onChange={selectedDate => {
-                    this.setDates(selectedDate);
-                    onDateChange(selectedDate);
-                  }}
-                  inline
-                />
-              </div>
-            )}
-          </div>
-          <div
-            onClick={() => onDateChange(this.nextDate(date))}
-            className="nextday"
-          >
-            {" "}
-            {nextDay}
-            <IoIosArrowRoundForward size={30} />
-          </div>
-        </div>
-      </div>
+      <Fragment>
+        {/* <div className="content"> */}
+        <MainContentHeader
+          address={address}
+          navLink="/"
+          linkName="Today's Weather"
+          getLocalWeather={getLocalWeather}
+        />
+        <DatesSection date={date} onDateChange={onDateChange} />
+        <DaySummary daySummary={daySummary} />
+        <DayInfo
+          dayInfo={{
+            windSpeed,
+            uvIndex,
+            visibility,
+            sunriseTime,
+            sunsetTime,
+            temperatureHigh,
+            temperatureHighTime,
+            temperatureLow,
+            temperatureLowTime,
+            units
+          }}
+        />
+        <HourlyData hourlyData={hourlyData} />
+        {/* </div> */}
+      </Fragment>
     );
   }
 }

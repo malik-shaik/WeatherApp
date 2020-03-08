@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import weatherLogo from "../logo.png";
+import weatherLogo from "../styles/logo.png";
 
 export class Logo extends Component {
   render() {
