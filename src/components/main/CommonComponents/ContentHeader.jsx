@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { MdGpsFixed } from "react-icons/md";
-import "./styles/main.css";
+import "../styles/main.css";
 
-export class MainContentHeader extends Component {
+export class ContentHeader extends Component {
   render() {
     const { address, navLink, linkName, getLocalWeather } = this.props;
 
@@ -19,4 +19,4 @@ export class MainContentHeader extends Component {
   }
 }
 
-export default MainContentHeader;
+export default ContentHeader;

@@ -3,7 +3,7 @@ import WeatherInfo from "./CurrentWeather/WeatherInfo";
 import WeatherIcon from "./CommonComponents/WeatherIcon";
 import DaySummary from "./CommonComponents/DaySummary";
 import WeeklyData from "./CurrentWeather/WeeklyData";
-import ContentHeader from "./ContentHeader";
+import ContentHeader from "./CommonComponents/ContentHeader";
 
 export class CurrentWeather extends Component {
   state = {

@@ -87,7 +87,7 @@ export class App extends Component {
 
   onAddressChange = async (address, coordinates) => {
     const { appLanguage, units, date } = this.state;
-    this.setState({ address });
+    this.setState({ address, coordinates });
     this.getTodaysWeatherData(coordinates, appLanguage, units);
     this.getTimeMachineData(coordinates, appLanguage, units, date);
   };
@@ -139,7 +139,6 @@ export class App extends Component {
                       coordinates={coordinates}
                       weatherData={weatherData}
                       getLocalWeather={this.getLocalWeather}
-                      onAddressChange={this.onAddressChange}
                       {...props}
                     />
                   )}
@@ -154,6 +153,7 @@ export class App extends Component {
                       address={address}
                       timeMachineData={timeMachineData}
                       onDateChange={this.onDateChange}
+                      getLocalWeather={this.getLocalWeather}
                       {...props}
                     />
                   )}

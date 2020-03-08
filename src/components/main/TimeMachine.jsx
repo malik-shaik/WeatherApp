@@ -3,7 +3,7 @@ import DatesSection from "./TimeMachine/DatesSection";
 import DaySummary from "./CommonComponents/DaySummary";
 import HourlyData from "./TimeMachine/HourlyData";
 import DayInfo from "./TimeMachine/DayInfo";
-import MainContentHeader from "./MainContentHeader";
+import ContentHeader from "./CommonComponents/ContentHeader";
 
 export class TimeMachine extends Component {
   state = {
@@ -38,8 +38,7 @@ export class TimeMachine extends Component {
     console.log();
     return (
       <Fragment>
-        {/* <div className="content"> */}
-        <MainContentHeader
+        <ContentHeader
           address={address}
           navLink="/"
           linkName="Today's Weather"
@@ -62,7 +61,6 @@ export class TimeMachine extends Component {
           }}
         />
         <HourlyData hourlyData={hourlyData} />
-        {/* </div> */}
       </Fragment>
     );
   }
