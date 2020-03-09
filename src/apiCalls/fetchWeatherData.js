@@ -5,7 +5,7 @@ export const fetchWeatherData = async (
   appLanguage,
   temperatureUnits
 ) => {
-  const units = temperatureUnits === "celsius" ? "si" : "us";
+  const units = temperatureUnits === "celsius" ? "ca" : "us";
   const { lat, lng } = coordinates;
   const apiUri = "https://api.darksky.net";
   const url = `${apiUri}/forecast/${API_KEY}/${lat},${lng}?lang=${appLanguage}&&units=${units}`;

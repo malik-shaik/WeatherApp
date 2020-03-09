@@ -7,6 +7,7 @@ export class Search extends Component {
   state = {
     address: "",
     coordinates: { lat: null, lng: null },
+    timezone: "",
     displaylist: false,
     suggestions: []
   };
@@ -24,23 +25,34 @@ export class Search extends Component {
     } else this.setState({ displaylist: false });
   };
 
-  handleSelectCity = (city, country, lat, lng) => {
+  handleSelectCity = (city, country, lat, lng, timezone) => {
     const address = `${city}, ${country}`;
     const coordinates = { lat, lng };
     const { displaylist } = this.state;
-    this.setState({ address, coordinates, displaylist: !displaylist });
+    this.setState({
+      address,
+      coordinates,
+      timezone,
+      displaylist: !displaylist
+    });
   };
 
-  handleSearch = (onAddressChange, address, coordinates) => {
+  handleSearch = (onAddressChange, address, coordinates, timezone) => {
     if (address.length !== 0) {
-      onAddressChange(address, coordinates);
+      onAddressChange(address, coordinates, timezone);
       this.setState({ address: "" });
     }
   };
 
   render() {
     const { onAddressChange, loading } = this.props;
-    const { address, coordinates, suggestions, displaylist } = this.state;
+    const {
+      address,
+      coordinates,
+      timezone,
+      suggestions,
+      displaylist
+    } = this.state;
 
     return (
       <div className="search-box">
@@ -57,18 +69,18 @@ export class Search extends Component {
           <FaSearch
             id="search-icon"
             onClick={() =>
-              this.handleSearch(onAddressChange, address, coordinates)
+              this.handleSearch(onAddressChange, address, coordinates, timezone)
             }
           />
         )}
         {displaylist && (
           <div className="suggestion-list">
-            {suggestions.map(({ city, iso3, lat, lng }, index) => (
+            {suggestions.map(({ city, iso3, lat, lng, timezone }, index) => (
               <li
                 key={index}
                 className="city"
                 onClick={() => {
-                  this.handleSelectCity(city, iso3, lat, lng);
+                  this.handleSelectCity(city, iso3, lat, lng, timezone);
                 }}
               >
                 {city}, {iso3}

@@ -15,13 +15,12 @@ export class TimeMachine extends Component {
     const { data } = this.state.timeMachineData.hourly;
     const { hourlyData } = this.state;
     for (let i = 0; i < 24; i++) {
-      i % 2 !== 0 && hourlyData.push(data[i]);
+      i % 2 === 0 && hourlyData.push(data[i]);
     }
     this.setState({ hourlyData });
   }
   render() {
     const { date, onDateChange, address, getLocalWeather, units } = this.props;
-
     const { hourlyData } = this.state;
     const {
       summary: daySummary,
@@ -35,7 +34,7 @@ export class TimeMachine extends Component {
       temperatureLow,
       temperatureLowTime
     } = this.state.timeMachineData.daily.data[0];
-    console.log();
+
     return (
       <Fragment>
         <ContentHeader

@@ -6,7 +6,7 @@ export class HourlyData extends Component {
   getTime = unixTime => {
     let date = new Date(unixTime * 1000);
     let hours = date.getHours();
-    let time = hours > 12 ? `${hours - 12}pm` : `${hours}am`;
+    let time = hours >= 12 ? `${hours - 12}pm` : `${hours}am`;
     return time;
   };
 
