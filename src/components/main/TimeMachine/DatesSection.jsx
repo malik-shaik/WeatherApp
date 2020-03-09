@@ -6,7 +6,7 @@ import {
   IoIosArrowRoundForward
 } from "react-icons/io";
 import moment from "moment";
-import momentTimezone from "moment-timezone";
+// import momentTimezone from "moment-timezone";
 import Calendar from "./Calendar";
 
 export class DatesSection extends Component {

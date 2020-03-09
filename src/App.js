@@ -8,7 +8,6 @@ import NavBar from "./components/layout/Navbar";
 import CurrentWeather from "./components/main/CurrentWeather";
 import TimeMachine from "./components/main/TimeMachine";
 import Footer from "./components/layout/Footer";
-// import momentTimezone from "moment-timezone";
 import "./App.css";
 
 export class App extends Component {
@@ -26,10 +25,7 @@ export class App extends Component {
 
   getTimeZonesLocalTime = (date, timezone) => {
     console.log(date);
-    return moment(date).format();
-    // return moment(date).format("YYYY-MM-DDTHH:mm:ss");
-    // return moment(date, "DD/MM/YYYY", true).format();
-    // return momentTimezone.tz(date, timezone).format();
+    return moment(date).format("YYYY-MM-DDTHH:mm:ss");
   };
 
   getLocalWeather = () => {
