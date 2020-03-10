@@ -14,9 +14,12 @@ export class TimeMachine extends Component {
   componentDidMount() {
     const { data } = this.state.timeMachineData.hourly;
     const { hourlyData } = this.state;
-    for (let i = 0; i < 24; i++) {
-      i % 2 === 0 && hourlyData.push(data[i]);
+    for (let i = 0; i < 24; i += 2) {
+      hourlyData.push(data[i]);
     }
+    // for (let i = 0; i < 24; i++) {
+    //   i % 2 === 0 && hourlyData.push(data[i]);
+    // }
     this.setState({ hourlyData });
   }
   render() {
