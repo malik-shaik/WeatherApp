@@ -14,8 +14,9 @@ export class CurrentWeather extends Component {
   componentDidMount() {
     const { data } = this.state.weatherData.hourly;
     const { hourlyData } = this.state;
-    for (let i = 0; i < 24; i++) {
-      i % 2 !== 0 && hourlyData.push(data[i]);
+    for (let i = 0; i < 24; i += 2) {
+      // i % 2 !== 0 && hourlyData.push(data[i]);
+      hourlyData.push(data[i]);
     }
     this.setState({ hourlyData });
   }

@@ -7,7 +7,6 @@ export class Search extends Component {
   state = {
     address: "",
     coordinates: { lat: null, lng: null },
-    timezone: "",
     displaylist: false,
     suggestions: []
   };
@@ -25,34 +24,27 @@ export class Search extends Component {
     } else this.setState({ displaylist: false });
   };
 
-  handleSelectCity = (city, country, lat, lng, timezone) => {
+  handleSelectCity = (city, country, lat, lng) => {
     const address = `${city}, ${country}`;
     const coordinates = { lat, lng };
     const { displaylist } = this.state;
     this.setState({
       address,
       coordinates,
-      timezone,
       displaylist: !displaylist
     });
   };
 
-  handleSearch = (onAddressChange, address, coordinates, timezone) => {
+  handleSearch = (onAddressChange, address, coordinates) => {
     if (address.length !== 0) {
-      onAddressChange(address, coordinates, timezone);
+      onAddressChange(address, coordinates);
       this.setState({ address: "" });
     }
   };
 
   render() {
     const { onAddressChange, loading } = this.props;
-    const {
-      address,
-      coordinates,
-      timezone,
-      suggestions,
-      displaylist
-    } = this.state;
+    const { address, coordinates, suggestions, displaylist } = this.state;
 
     return (
       <div className="search-box">
@@ -69,18 +61,18 @@ export class Search extends Component {
           <FaSearch
             id="search-icon"
             onClick={() =>
-              this.handleSearch(onAddressChange, address, coordinates, timezone)
+              this.handleSearch(onAddressChange, address, coordinates)
             }
           />
         )}
         {displaylist && (
           <div className="suggestion-list">
-            {suggestions.map(({ city, iso3, lat, lng, timezone }, index) => (
+            {suggestions.map(({ city, iso3, lat, lng }, index) => (
               <li
                 key={index}
                 className="city"
                 onClick={() => {
-                  this.handleSelectCity(city, iso3, lat, lng, timezone);
+                  this.handleSelectCity(city, iso3, lat, lng);
                 }}
               >
                 {city}, {iso3}

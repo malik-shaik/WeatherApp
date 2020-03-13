@@ -1,14 +1,20 @@
 import { API_KEY } from "../config/api";
+import moment from "moment";
 
 export const fetchWeatherData = async (
   coordinates,
   appLanguage,
-  temperatureUnits
+  temperatureUnits,
+  date
 ) => {
   const units = temperatureUnits === "celsius" ? "ca" : "us";
   const { lat, lng } = coordinates;
-  const apiUri = "https://api.darksky.net";
-  const url = `${apiUri}/forecast/${API_KEY}/${lat},${lng}?lang=${appLanguage}&&units=${units}`;
+  let apiUri = `https://api.darksky.net/forecast/${API_KEY}/${lat},${lng}`;
+  if (date !== null) {
+    const dateTime = moment(date).format("YYYY-MM-DDTHH:mm:ss");
+    apiUri = `${apiUri},${dateTime}`;
+  }
+  const url = `${apiUri}?lang=${appLanguage}&&units=${units}`;
   const res = await fetch(url);
   const data = await res.json();
   return data;
