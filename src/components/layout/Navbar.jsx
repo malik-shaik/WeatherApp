@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Logo from "./Navbar/Logo";
 import Search from "./Navbar/Search";
 import AppLanguage from "./Navbar/AppLanguage";
-import "./styles/layout.css";
 import Units from "./Navbar/Units";
+import "./styles/layout.css";
 
 export class NavBar extends Component {
   render() {

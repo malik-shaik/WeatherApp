@@ -1,23 +1,9 @@
 import React, { Component } from "react";
 import { WiSunrise, WiSunset } from "react-icons/wi";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { getHours, getHoursMinutes } from "../../../utils/timeCoversions";
 
 export class DayInfo extends Component {
-  // convert unix time
-  getHours = unixTime => {
-    let date = new Date(unixTime * 1000);
-    let hours = date.getHours();
-    let time = hours >= 12 ? `${hours - 12}pm` : `${hours}am`;
-    return time;
-  };
-  getHoursMinutes = unixTime => {
-    let date = new Date(unixTime * 1000);
-    let hours = date.getHours();
-    let mins = date.getMinutes();
-    let time = hours >= 12 ? `${hours - 12}:${mins}pm` : `${hours}:${mins}am`;
-    return time;
-  };
-
   render() {
     const {
       windSpeed,
@@ -32,14 +18,14 @@ export class DayInfo extends Component {
       units
     } = this.props.dayInfo;
 
-    const lowTemperature = Math.floor(temperatureLow);
-    const highTemperature = Math.floor(temperatureHigh);
+    const lowTemperature = Math.round(temperatureLow);
+    const highTemperature = Math.round(temperatureHigh);
     const Visibility = Math.round(visibility);
     const wind = Math.round(windSpeed);
-    const highTemperatureTime = this.getHours(temperatureHighTime);
-    const lowTemperatureTime = this.getHours(temperatureLowTime);
-    const sunrise = this.getHoursMinutes(sunriseTime);
-    const sunset = this.getHoursMinutes(sunsetTime);
+    const highTemperatureTime = getHours(temperatureHighTime);
+    const lowTemperatureTime = getHours(temperatureLowTime);
+    const sunrise = getHoursMinutes(sunriseTime);
+    const sunset = getHoursMinutes(sunsetTime);
     const windSpeedUnits = units === "celsius" ? "kmph" : "mph";
     const visibilityUnits = units === "celsius" ? "km" : "miles";
 

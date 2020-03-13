@@ -1,33 +1,33 @@
 import React, { Component } from "react";
 
 export class WeatherInfo extends Component {
+  getTemperature = temperature => Math.round(temperature);
+
   render() {
     const {
       mainTemperature,
       summary,
       apparentTemperature,
-      lowTemp,
-      higTemp
+      lowTemperature,
+      highTemperature
     } = this.props;
-
-    const mainTemp = Math.floor(mainTemperature);
-    const lowTemperature = Math.floor(lowTemp);
-    const higTemperature = Math.floor(higTemp);
-    const apparentTemp = Math.floor(apparentTemperature);
 
     return (
       <div className="weather-info">
         <div className="temperature-info">
-          <span className="temperature">{mainTemp}&deg;</span>
+          <span className="temperature">
+            {this.getTemperature(mainTemperature)}&deg;
+          </span>
           <span className="summary">{summary}</span>
         </div>
         <div className="feelslike-info">
           <span className="feelslike">
-            Feels like: <strong>{apparentTemp}&deg;</strong>
+            Feels like:{" "}
+            <strong>{this.getTemperature(apparentTemperature)}&deg;</strong>
           </span>{" "}
           <span>
-            Low: <strong>{lowTemperature}&deg;</strong> High:{" "}
-            <strong>{higTemperature}&deg;</strong>
+            Low: <strong>{this.getTemperature(lowTemperature)}&deg;</strong>{" "}
+            High: <strong>{this.getTemperature(highTemperature)}&deg;</strong>
           </span>
         </div>
       </div>

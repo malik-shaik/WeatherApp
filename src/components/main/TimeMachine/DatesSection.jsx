@@ -6,7 +6,6 @@ import {
   IoIosArrowRoundForward
 } from "react-icons/io";
 import moment from "moment";
-// import momentTimezone from "moment-timezone";
 import Calendar from "./Calendar";
 
 export class DatesSection extends Component {
@@ -19,10 +18,10 @@ export class DatesSection extends Component {
   componentDidMount() {
     const { date } = this.props;
     this.setDates(date);
-    // const d = moment(date, "DD/MM/YYYY", true).format();
-    // var newYork = momentTimezone.tz(d, "America/New_York");
-    // console.log(newYork);
   }
+
+  nextDate = date => moment(date).add(1, "days")._d;
+  previousDate = date => moment(date).subtract(1, "days")._d;
 
   setDates = date => {
     const nextdate = this.nextDate(date);
@@ -35,9 +34,6 @@ export class DatesSection extends Component {
       .toString();
     this.setState({ nextDay, previousDay });
   };
-
-  nextDate = date => moment(date).add(1, "days")._d;
-  previousDate = date => moment(date).subtract(1, "days")._d;
 
   render() {
     const { nextDay, previousDay, displayCalander } = this.state;

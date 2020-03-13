@@ -1,32 +1,25 @@
 import React, { Component } from "react";
 import WeatherIcon from "../CommonComponents/WeatherIcon";
-import moment from "moment";
+import { getDay } from "../../../utils/timeCoversions";
 
 export class WeeklyData extends Component {
-  // convert unix timestamp into date & time
-  getTime = unixTime => {
-    let date = new Date(unixTime * 1000);
-    let day = moment(date).format("dddd");
-    return day;
-  };
-
+  getTemperature = temperature => Math.round(temperature);
   render() {
     const { weeklyData } = this.props;
-    const lowTemp = Math.floor(weeklyData[0].temperatureLow);
-    const higTemp = Math.floor(weeklyData[0].temperatureHigh);
     return (
       <div className="weekly-data">
-        {weeklyData.map((data, index) => (
+        {weeklyData.map((day, index) => (
           <div key={index} className="weekData">
             <div className="weekday">
-              {index === 0 ? "Today" : this.getTime(data.time)}
+              {index === 0 ? "Today" : getDay(day.time)}
             </div>
             <div id="weekly-icon">
-              <WeatherIcon icon={data.icon} color={"white"} size={25} />
+              <WeatherIcon icon={day.icon} color={"white"} size={25} />
             </div>
-            <div className="day-summary">{data.summary}</div>
+            <div className="day-summary">{day.summary}</div>
             <div id="day-timperature">
-              {higTemp}&deg; - {lowTemp}&deg;
+              {this.getTemperature(day.temperatureHigh)}&deg; -{" "}
+              {this.getTemperature(day.temperatureLow)}&deg;
             </div>
           </div>
         ))}

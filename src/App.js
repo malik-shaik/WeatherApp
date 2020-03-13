@@ -141,7 +141,6 @@ export class App extends Component {
                   component={props => (
                     <CurrentWeather
                       address={address}
-                      coordinates={coordinates}
                       weatherData={weatherData}
                       getLocalWeather={this.getLocalWeather}
                       {...props}

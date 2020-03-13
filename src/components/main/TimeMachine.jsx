@@ -21,7 +21,7 @@ export class TimeMachine extends Component {
   }
   render() {
     const { date, onDateChange, address, getLocalWeather, units } = this.props;
-    const { hourlyData } = this.state;
+    const { hourlyData, timeMachineData } = this.state;
     const {
       summary: daySummary,
       windSpeed,
@@ -33,7 +33,7 @@ export class TimeMachine extends Component {
       temperatureHighTime,
       temperatureLow,
       temperatureLowTime
-    } = this.state.timeMachineData.daily.data[0];
+    } = timeMachineData.daily.data[0];
 
     return (
       <Fragment>

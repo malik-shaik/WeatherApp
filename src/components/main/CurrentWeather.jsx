@@ -6,35 +6,18 @@ import WeeklyData from "./CurrentWeather/WeeklyData";
 import ContentHeader from "./CommonComponents/ContentHeader";
 
 export class CurrentWeather extends Component {
-  state = {
-    weatherData: this.props.weatherData,
-    hourlyData: []
-  };
-
-  componentDidMount() {
-    const { data } = this.state.weatherData.hourly;
-    const { hourlyData } = this.state;
-    for (let i = 0; i < 24; i += 2) {
-      // i % 2 !== 0 && hourlyData.push(data[i]);
-      hourlyData.push(data[i]);
-    }
-    this.setState({ hourlyData });
-  }
-
   render() {
-    const { address, getLocalWeather } = this.props;
-    const { weatherData } = this.state;
-    const { data: weeklyData } = this.state.weatherData.daily;
+    const { address, weatherData, getLocalWeather } = this.props;
+    const { data: weeklyData } = weatherData.daily;
     const {
       icon,
       temperature,
       apparentTemperature,
       summary
-    } = this.state.weatherData.currently;
+    } = weatherData.currently;
 
-    const mainTemperature = Math.floor(temperature);
     const lowTemp = weeklyData[0].temperatureLow;
-    const higTemp = weeklyData[0].temperatureHigh;
+    const highTemp = weeklyData[0].temperatureHigh;
     const daySummary = weatherData.hourly.summary;
 
     return (
@@ -48,11 +31,11 @@ export class CurrentWeather extends Component {
         <div className="content">
           <WeatherIcon icon={icon} color={"white"} size={75} />
           <WeatherInfo
-            mainTemperature={mainTemperature}
+            mainTemperature={temperature}
             summary={summary}
             apparentTemperature={apparentTemperature}
-            lowTemp={lowTemp}
-            higTemp={higTemp}
+            lowTemperature={lowTemp}
+            highTemperature={highTemp}
           />
         </div>
         <DaySummary daySummary={daySummary} />

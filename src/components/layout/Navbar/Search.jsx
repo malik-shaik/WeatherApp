@@ -17,7 +17,7 @@ export class Search extends Component {
     if (address.length > 2) {
       const cities = cityTimezones.cityMapping;
       const suggestions = cities.filter(data => {
-        const regex = new RegExp(`^${address}`, "gi");
+        const regex = new RegExp(`${address}`, "gi");
         return data.city.match(regex);
       });
       this.setState({ suggestions, displaylist: true });
