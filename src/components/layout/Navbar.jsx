@@ -3,6 +3,7 @@ import Logo from "./Navbar/Logo";
 import Search from "./Navbar/Search";
 import AppLanguage from "./Navbar/AppLanguage";
 import "./styles/layout.css";
+import Units from "./Navbar/Units";
 
 export class NavBar extends Component {
   render() {
@@ -24,21 +25,7 @@ export class NavBar extends Component {
             appLanguage={appLanguage}
             onLanguageChange={onLanguageChange}
           />
-          <div className="units">
-            <span
-              onClick={() => onUnitsChange("celsius")}
-              className={units === "celsius" ? "active" : ""}
-            >
-              C&deg;
-            </span>
-            /
-            <span
-              onClick={() => onUnitsChange("fahrenheit")}
-              className={units === "fahrenheit" ? "active" : ""}
-            >
-              F&deg;
-            </span>
-          </div>
+          <Units units={units} onUnitsChange={onUnitsChange} />
         </div>
       </header>
     );
