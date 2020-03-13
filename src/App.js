@@ -19,7 +19,7 @@ export class App extends Component {
     timeMachineData: {},
     loading: true
   };
-
+  // ################ Get Local Weather Data ############################
   getLocalWeather = () => {
     const { appLanguage, units, date } = this.state;
     this.setState({ loading: true });
@@ -55,18 +55,8 @@ export class App extends Component {
     this.getLocalWeather();
   }
 
-  getTimeMachineData = async (coordinates, appLanguage, units, date) => {
-    this.setState({ loading: true });
-    const timeMachineData = await fetchWeatherData(
-      coordinates,
-      appLanguage,
-      units,
-      date
-    );
-    this.setState({ appLanguage, timeMachineData, loading: false });
-  };
-
-  getTodaysWeatherData = async (coordinates, appLanguage, units) => {
+  // ################ Get Weather Data   ############################
+  getWeatherData = async (coordinates, appLanguage, units, date) => {
     this.setState({ loading: true });
     const weatherData = await fetchWeatherData(
       coordinates,
@@ -74,33 +64,42 @@ export class App extends Component {
       units,
       null
     );
-    this.setState({ appLanguage, weatherData, loading: false });
+    const timeMachineData = await fetchWeatherData(
+      coordinates,
+      appLanguage,
+      units,
+      date
+    );
+    this.setState({
+      appLanguage,
+      weatherData,
+      timeMachineData,
+      loading: false
+    });
   };
 
+  // ################ on change Handlers ############################
   onLanguageChange = async appLanguage => {
     const { coordinates, units, date } = this.state;
-    this.getTodaysWeatherData(coordinates, appLanguage, units);
-    this.getTimeMachineData(coordinates, appLanguage, units, date);
+    this.getWeatherData(coordinates, appLanguage, units, date);
   };
 
   onUnitsChange = async units => {
     const { coordinates, appLanguage, date } = this.state;
     this.setState({ units });
-    this.getTodaysWeatherData(coordinates, appLanguage, units);
-    this.getTimeMachineData(coordinates, appLanguage, units, date);
+    this.getWeatherData(coordinates, appLanguage, units, date);
   };
 
   onAddressChange = async (address, coordinates) => {
     const { appLanguage, units, date } = this.state;
     this.setState({ address, coordinates });
-    this.getTodaysWeatherData(coordinates, appLanguage, units);
-    this.getTimeMachineData(coordinates, appLanguage, units, date);
+    this.getWeatherData(coordinates, appLanguage, units, date);
   };
 
   onDateChange = date => {
     const { coordinates, appLanguage, units } = this.state;
     this.setState({ date });
-    this.getTimeMachineData(coordinates, appLanguage, units, date);
+    this.getWeatherData(coordinates, appLanguage, units, date);
   };
 
   render() {
